@@ -5,41 +5,10 @@ import (
 	"strings"
 )
 
-// import (
-// 	"log"
-// 	"net/http"
-// )
-
-// type router struct {
-// 	handlers map[string]HandlerFunc
-// }
-
-// func newRouter() *router {
-// 	return &router{handlers: make(map[string]HandlerFunc)}
-// }
-
-// func (r *router) addRoute(method string, pattern string, handler HandlerFunc) {
-// 	log.Printf("Route %4s - %s", method, pattern)
-// 	key := method + "-" + pattern
-// 	r.handlers[key] = handler
-// }
-
-// func (r *router) handle(c *Context) {
-// 	key := c.Method + "-" + c.Path
-// 	if handler, ok := r.handlers[key]; ok {
-// 		handler(c)
-// 	} else {
-// 		c.String(http.StatusNotFound, "404 NOT FOUND: %s\n", c.Path)
-// 	}
-// }
-
 type router struct {
 	roots    map[string]*node
 	handlers map[string]HandlerFunc
 }
-
-// roots key eg, roots['GET'] roots['POST']
-// handlers key eg, handlers['GET-/p/:lang/doc'], handlers['POST-/p/book']
 
 func newRouter() *router {
 	return &router{
@@ -102,6 +71,16 @@ func (r *router) getRoute(method string, path string) (*node, map[string]string)
 	}
 
 	return nil, nil
+}
+
+func (r *router) getRoutes(method string) []*node {
+	root, ok := r.roots[method]
+	if !ok {
+		return nil
+	}
+	nodes := make([]*node, 0)
+	root.travel(&nodes)
+	return nodes
 }
 
 func (r *router) handle(c *Context) {
