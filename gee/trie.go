@@ -3,8 +3,8 @@ package gee
 import "strings"
 
 type node struct {
-	pattern  string  //路径 /lang/:people
-	part     string  //路径的part
+	pattern  string  //待匹配路由 /lang/:people
+	part     string  //路径的一部分   :people
 	children []*node //子节点
 	isWild   bool    //是否精准匹配
 }
@@ -31,7 +31,7 @@ func (n *node) matchChildren(part string) []*node {
 }
 
 // tire数要支持插入和查询
-
+//第一个匹配的节点，用于插入
 func (n *node) insert(pattern string, parts []string, height int) {
 	if len(parts) == height {
 		n.pattern = pattern
@@ -46,7 +46,7 @@ func (n *node) insert(pattern string, parts []string, height int) {
 	}
 	child.insert(pattern, parts, height+1)
 }
-
+//所有匹配成功的节点，用于查找
 func (n *node) search(parts []string, height int) *node {
 	if len(parts) == height || strings.HasPrefix(n.part, "*") {
 		if n.pattern == "" {
