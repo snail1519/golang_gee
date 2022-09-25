@@ -8,16 +8,16 @@ import (
 
 type H map[string]interface{}
 
-// type Context struct {
-// 	//封装最基本两个的对象
-// 	Writer http.ResponseWriter
-// 	Req    *http.Request
-// 	//其他属性
-// 	Path   string
-// 	Method string
-// 	//响应code
-// 	StatusCode int
-// }
+//	type Context struct {
+//		//封装最基本两个的对象
+//		Writer http.ResponseWriter
+//		Req    *http.Request
+//		//其他属性
+//		Path   string
+//		Method string
+//		//响应code
+//		StatusCode int
+//	}
 type Context struct {
 	// origin objects
 	Writer http.ResponseWriter

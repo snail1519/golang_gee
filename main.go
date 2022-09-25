@@ -42,7 +42,5 @@ func main() {
 		c.JSON(http.StatusOK, gee.H{"filepath": c.Param("filepath")})
 	})
 
-
-	
 	r.Run(":9999")
 }
