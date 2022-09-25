@@ -67,7 +67,7 @@ func (c *Context) Data(code int, data []byte) {
 }
 
 func (c *Context) JSON(code int, obj interface{}) {
-	c.SetHeader("Context-type", "application/json")
+	c.SetHeader("Content-type", "application/json")
 	c.Status(code)
 	encoder := json.NewEncoder(c.Writer)
 	if err := encoder.Encode(obj); err != nil {
